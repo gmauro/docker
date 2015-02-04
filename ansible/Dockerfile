@@ -12,6 +12,7 @@ RUN apt-get update && \
     apt-get install -q -y \
     python-pip \
     python-dev \
-    python-yaml    
+    python-yaml \
+    python-jinja2   
 
 RUN pip install ansible
