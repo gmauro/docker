@@ -1,12 +1,8 @@
-# Based on Debian Wheezy
-FROM debian:wheezy
+# Based on gmauro/debian
+FROM gmauro/debian
 MAINTAINER Gianmauro Cuccuru <gmauro@crs4.it>
 
 ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update && \
-    apt-get install -q -y \
-    apt-utils 
 
 RUN apt-get update && \
     apt-get install -q -y \
