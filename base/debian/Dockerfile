@@ -5,7 +5,11 @@ MAINTAINER Gianmauro Cuccuru <gmauro@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive 
 
 RUN apt-get update && \
-    apt-get install -q -y apt-utils 
+    apt-get install -q -y \
+    apt-utils \
+    wget \
+    nano \
+    git
 
 RUN apt-get install -y openssh-server
 
