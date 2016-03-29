@@ -1,5 +1,5 @@
 # Based on Ubuntu 14.04
-FROM ubuntu:14.04
+FROM ubuntu:14.04.4
 MAINTAINER Gianmauro Cuccuru <gmauro@crs4.it>
 
 ENV DEBIAN_FRONTEND noninteractive
