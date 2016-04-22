@@ -27,7 +27,7 @@ RUN buildDeps="curl sudo python-setuptools python-dev build-essential libssl-dev
       none \
  && cd /plone/instance \
  && sed -i 's/parts =/parts =\n    zeoserver/g' buildout.cfg \
- && sed -i 's/Pillow/Pillow\n    bika.lims/g' /tmp/buildout.cfg
+ && sed -i 's/Pillow/Pillow\n    bika.lims/g' buildout.cfg
  && echo '\n[zeoserver]\nrecipe = plone.recipe.zeoserver\nfile-storage = /data/filestorage/Data.fs\nblob-storage = /data/blobstorage' >> buildout.cfg \
  && sudo -u plone bin/buildout \
  && chown -R plone:plone /plone /data \
