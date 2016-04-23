@@ -35,10 +35,20 @@ RUN apt-get update && \
     libssl-dev \
     libexpat1-dev \
     libxslt1.1 \
+    libxml2-dev \
+    libxslt1-dev \
+    libbz2-dev \
+    libjpeg62-dev \
     gnuplot \
     libcairo2 \
     libpango1.0-0 \
     libgdk-pixbuf2.0-0
+
+RUN apt-get update && \
+    apt-get install -q -y \   
+    libxslt1.1 \
+    libxml2 \
+    libjpeg62
 
 RUN curl -o Plone.tgz -SL https://launchpad.net/plone/$PLONE_MAJOR/$PLONE_VERSION/+download/Plone-$PLONE_VERSION-UnifiedInstaller.tgz \
  && echo "$PLONE_MD5 Plone.tgz" | md5sum -c - \
