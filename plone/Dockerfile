@@ -65,7 +65,7 @@ RUN curl -o Plone.tgz -SL https://launchpad.net/plone/$PLONE_MAJOR/$PLONE_VERSIO
  && cd /plone/instance \
  && sed -i 's/parts =/parts =\n    zeoserver/g' buildout.cfg \
  && echo '\n[zeoserver]\nrecipe = plone.recipe.zeoserver\nfile-storage = /data/filestorage/Data.fs\nblob-storage = /data/blobstorage' >> buildout.cfg \
- && sudo -u plone bin/buildout \
+ && sudo -u plone bin/buildout
 
 RUN sed -i 's/Pillow/Pillow\n    bika.lims/g' buildout.cfg \
  && sed -i 's/bika.lims/bika.lims\n    plone.jsonapi.core/g' buildout.cfg \
