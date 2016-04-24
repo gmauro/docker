@@ -23,6 +23,7 @@ RUN apt-get update && \
     apt-get install -q -y \
     build-essential \
     gcc \
+    python-setuptools \
     python-dev \
     git-core \
     libffi-dev \
@@ -67,7 +68,8 @@ RUN curl -o Plone.tgz -SL https://launchpad.net/plone/$PLONE_MAJOR/$PLONE_VERSIO
  && echo '\n[zeoserver]\nrecipe = plone.recipe.zeoserver\nfile-storage = /data/filestorage/Data.fs\nblob-storage = /data/blobstorage' >> buildout.cfg \
  && sudo -u plone bin/buildout
 
-RUN sed -i 's/Pillow/Pillow\n    bika.lims/g' buildout.cfg \
+RUN cd /plone/instance \
+ && sed -i 's/Pillow/Pillow\n    bika.lims/g' buildout.cfg \
  && sed -i 's/bika.lims/bika.lims\n    plone.jsonapi.core/g' buildout.cfg \
  && sudo -u plone bin/buildout 
 
