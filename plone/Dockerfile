@@ -44,10 +44,7 @@ RUN apt-get update && \
     gnuplot \
     libcairo2 \
     libpango1.0-0 \
-    libgdk-pixbuf2.0-0
-
-RUN apt-get update && \
-    apt-get install -q -y \   
+    libgdk-pixbuf2.0-0 \
     libxslt1.1 \
     libxml2 \
     libjpeg62
@@ -69,26 +66,25 @@ RUN curl -o Plone.tgz -SL https://launchpad.net/plone/$PLONE_MAJOR/$PLONE_VERSIO
  && sed -i 's/eggs =/eggs =\n    plone.jsonapi.core/g' buildout.cfg \
  && sed -i 's/eggs =/eggs =\n    bika.lims/g' buildout.cfg \
  && echo '\n[zeoserver]\nrecipe = plone.recipe.zeoserver\nfile-storage = /data/filestorage/Data.fs\nblob-storage = /data/blobstorage' >> buildout.cfg \
- && sudo -u plone bin/buildout
-
-RUN chown -R plone:plone /plone /data \
+ && sudo -u plone bin/buildout \
+ && chown -R plone:plone /plone /data \
  && rm -rf /Plone* \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /plone/buildout-cache/downloads/* \
- && find /plone \( -type f -a -name '*.pyc' -o -name '*.pyo' \) -exec rm -rf '{}' +
-
-RUN apt-get autoremove
-
-RUN apt-get clean
+ && find /plone \( -type f -a -name '*.pyc' -o -name '*.pyo' \) -exec rm -rf '{}' + \
+ && apt-get autoremove \
+ && apt-get clean
 
 VOLUME /data/filestorage /data/blobstorage
 
 COPY docker-initialize.py docker-entrypoint.sh /
 
+RUN chmod a+x /docker-entrypoint.sh
+
 EXPOSE 8080
 USER plone
 WORKDIR /plone/instance
 
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["start"]
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
