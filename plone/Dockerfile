@@ -76,6 +76,10 @@ RUN chown -R plone:plone /plone /data \
  && rm -rf /plone/buildout-cache/downloads/* \
  && find /plone \( -type f -a -name '*.pyc' -o -name '*.pyo' \) -exec rm -rf '{}' +
 
+RUN apt-get autoremove
+
+RUN apt-get clean
+
 VOLUME /data/filestorage /data/blobstorage
 
 COPY docker-initialize.py docker-entrypoint.sh /
