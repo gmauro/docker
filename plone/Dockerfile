@@ -17,6 +17,7 @@ RUN apt-get update && \
     wget \
     nano \
     sudo \
+    supervisor \
     curl
 
 RUN apt-get update && \
