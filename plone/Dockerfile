@@ -84,5 +84,6 @@ EXPOSE 8080
 USER plone
 WORKDIR /plone/instance
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["start"]
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
