@@ -17,4 +17,5 @@ RUN apt-get update && \
  && apt-get autoremove \
  && apt-get clean
 
-RUN pip install ansible
+RUN git clone --recursive -b stable-2.1 https://github.com/ansible/ansible
+RUN pip install ansible/
