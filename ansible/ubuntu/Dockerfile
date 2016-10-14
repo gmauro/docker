@@ -1,23 +1,29 @@
 # Based on Ubuntu 14.04
-FROM ubuntu:14.04.4
+FROM ubuntu:14.04
 MAINTAINER Gianmauro Cuccuru <gmauro@crs4.it>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && \
-    apt-get install -q -y \
+RUN apt-get update \
+ && apt-get install -q -y \
     apt-utils \
     wget \
     nano \
-    git
-
-RUN apt-get update && \
-    apt-get install -q -y \
+    git \
+    build-essential \
     python-pip \
     python-dev \
     python-yaml \
-    python-jinja2   
+    python-paramiko \
+    python-six \
+    python-httplib2 \
+    python-jinja2 \
+ && apt-get autoremove \
+ && apt-get clean
 
-RUN pip install ansible
 
-
+RUN git clone --recursive -b stable-2.1 https://github.com/ansible/ansible \
+ && cd ./ansible \
+ && make install \
+ && cd .. \
+ && rm -rf ansible
