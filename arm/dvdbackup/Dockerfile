@@ -7,3 +7,5 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN git clone https://github.com/gmauro/arm /tmp/arm
 WORKDIR /tmp/arm
 RUN ansible-playbook local_dvdbackup.yml
+
+ENTRYPOINT ["dvdbackup"]
