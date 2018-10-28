@@ -22,7 +22,7 @@ RUN apt-get update && \
  && apt-get clean
 
 
-RUN git clone --recursive -b stable-2.1 https://github.com/ansible/ansible \
+RUN git clone --recursive -b stable-2.6 https://github.com/ansible/ansible \
  && cd ./ansible \
  && make install \
  && cd .. \
