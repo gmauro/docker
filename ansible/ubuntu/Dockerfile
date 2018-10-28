@@ -24,6 +24,9 @@ RUN apt-get update \
 
 RUN git clone --recursive -b stable-2.6 https://github.com/ansible/ansible \
  && cd ./ansible \
+ && pip install -r ./requirements.txt \
+ && pip install packaging \
+ && make \
  && make install \
  && cd .. \
  && rm -rf ansible
