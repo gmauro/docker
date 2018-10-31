@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
  && apt-get install -q -y \
     apt-utils \
+    apt-transport-https \
     wget \
     nano \
     git \
