@@ -1,15 +1,13 @@
 # Based on Ubuntu 18.04
-FROM ubuntu:18.04
-MAINTAINER Gianmauro Cuccuru <gmauro@crs4.it>
 
-ENV DEBIAN_FRONTEND noninteractive
+FROM ubuntu:18.04 AS compile-image
+MAINTAINER Gianmauro Cuccuru <gmauro@gmail.com>
+
 
 RUN apt-get update \
- && apt-get install -q -y \
+ && apt-get install -q -y --no-install-recommends \
     apt-utils \
     apt-transport-https \
-    wget \
-    nano \
     git \
     build-essential \
     python-pip \
@@ -20,10 +18,23 @@ RUN apt-get update \
 
 RUN git clone --recursive -b stable-2.6 https://github.com/ansible/ansible \
  && cd ./ansible \
- && pip install --upgrade packaging \
- && pip install --upgrade setuptools \
- && pip install --upgrade -r ./requirements.txt \
+ && pip install --user --upgrade packaging \
+ && pip install --user --upgrade setuptools \
+ && pip install --user --upgrade -r ./requirements.txt \
  && make \
- && make install \
- && cd .. \
- && rm -rf ansible
+ && pip install --user .
+
+
+FROM ubuntu:18.04 AS build-image
+COPY --from=compile-image /root/.local /root/.local
+
+# Make sure scripts in .local are usable:
+ENV PATH=/root/.local/bin:$PATH
+
+RUN apt-get update  \
+ && apt-get install -q -y --no-install-recommends \
+    python \
+    git \
+    ca-certificates \
+ && apt-get autoremove \
+ && apt-get clean
